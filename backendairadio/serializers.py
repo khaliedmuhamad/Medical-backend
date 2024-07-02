@@ -30,6 +30,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         token['username'] = user.username
+        token['username'] = user.username
+        token['is_staff'] = user.is_staff
         return token
 
     def validate(self, attrs):
@@ -43,6 +45,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             raise InvalidToken({'detail': 'User account is not active'})
 
         data = super().validate(attrs)
+        data['username'] = user.username  
+        data['is_staff'] = user.is_staff  
         return data
 
 class LoginSerializer(serializers.Serializer):
@@ -86,7 +90,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class CaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Case
-        fields = ['casename','sex','verdacht_diagnose','körper_teil']
+        fields = ['id','casename','sex','verdacht_diagnose','körper_teil']
         read_only_fields = ['casename']
 
 
@@ -102,7 +106,7 @@ class RadioInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RadioInfo
-        fields = ['case', 'position', 'size']
+        fields = ['id','case', 'position', 'size']
 
         
 class RadioImageSerializer(serializers.ModelSerializer):
