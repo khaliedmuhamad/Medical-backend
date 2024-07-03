@@ -22,7 +22,8 @@ from .serializers import ( CaseSerializer,
                           AnalysisResultAllSerializer,
                            ProfileSerializer, 
                            AllActivAndNotUserSerializer, 
-                           UpdateUserStatusSerializer )
+                           UpdateUserStatusSerializer,
+                            AnalysisResultAllSerializer_re )
 
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView, RetrieveDestroyAPIView, UpdateAPIView, RetrieveUpdateAPIView
@@ -167,6 +168,14 @@ class CaseRadioInfoAnalysisView(APIView):
         user_id = request.user.id  # Annahme: Der Benutzer ist authentifiziert und die ID kann abgerufen werden
         analysis_results = AnalysisResult.objects.filter(user_id=user_id).select_related('radioInfo__case', 'docker')
         serializer = AnalysisResultAllSerializer(analysis_results, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class CaseRadioInfoAnalysisView_re(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user_id = request.user.id  # Annahme: Der Benutzer ist authentifiziert und die ID kann abgerufen werden
+        analysis_results = AnalysisResult.objects.filter(user_id=user_id).select_related('radioInfo__case', 'docker')
+        serializer = AnalysisResultAllSerializer_re(analysis_results, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

@@ -144,6 +144,13 @@ class AnalysisResultAllSerializer(serializers.ModelSerializer):
     radioImage = serializers.SerializerMethodField()
     case = serializers.SerializerMethodField()
 
+class AnalysisResultAllSerializer_re(serializers.ModelSerializer):
+    #radioInfo = RadioInfoSerializer()
+    docker = serializers.PrimaryKeyRelatedField(queryset=Docker.objects.all())
+    user = serializers.StringRelatedField()
+    radioImage = serializers.SerializerMethodField()
+    case = serializers.SerializerMethodField()
+
     class Meta:
         model = AnalysisResult
         fields = ['id', 'result', 'date_analysis', 'docker', 'user', 'radioImage', 'case']
