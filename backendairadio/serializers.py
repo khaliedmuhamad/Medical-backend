@@ -136,15 +136,10 @@ class AnalysisResultSerializer(serializers.ModelSerializer):
         fields = ['result', 'radioInfo','docker','user']
 
 
+# The `AnalysisResultAllSerializer` class serializes `AnalysisResult` instances with specific fields
+# and related data.
 
 class AnalysisResultAllSerializer(serializers.ModelSerializer):
-    #radioInfo = RadioInfoSerializer()
-    docker = serializers.PrimaryKeyRelatedField(queryset=Docker.objects.all())
-    user = serializers.StringRelatedField()
-    radioImage = serializers.SerializerMethodField()
-    case = serializers.SerializerMethodField()
-
-class AnalysisResultAllSerializer_re(serializers.ModelSerializer):
     #radioInfo = RadioInfoSerializer()
     docker = serializers.PrimaryKeyRelatedField(queryset=Docker.objects.all())
     user = serializers.StringRelatedField()
@@ -155,6 +150,7 @@ class AnalysisResultAllSerializer_re(serializers.ModelSerializer):
         model = AnalysisResult
         fields = ['id', 'result', 'date_analysis', 'docker', 'user', 'radioImage', 'case']
 
+        
     def get_radioImage(self, obj):
         radio_info = obj.radioInfo
         radio_image = RadioImage.objects.filter(radio_Info=radio_info).first()
@@ -166,6 +162,8 @@ class AnalysisResultAllSerializer_re(serializers.ModelSerializer):
         radio_info = obj.radioInfo
         case = radio_info.case
         return CaseResultSerializer(case).data if case else None
+
+
     
 class AllActivAndNotUserSerializer(serializers.ModelSerializer):
     class Meta:

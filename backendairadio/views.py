@@ -23,7 +23,7 @@ from .serializers import ( CaseSerializer,
                            ProfileSerializer, 
                            AllActivAndNotUserSerializer, 
                            UpdateUserStatusSerializer,
-                            AnalysisResultAllSerializer_re )
+                             )
 
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView, RetrieveDestroyAPIView, UpdateAPIView, RetrieveUpdateAPIView
@@ -169,14 +169,21 @@ class CaseRadioInfoAnalysisView(APIView):
         analysis_results = AnalysisResult.objects.filter(user_id=user_id).select_related('radioInfo__case', 'docker')
         serializer = AnalysisResultAllSerializer(analysis_results, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-class CaseRadioInfoAnalysisView_re(APIView):
+    
+class CaseRadioInfoAnalysisView_result(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         user_id = request.user.id  # Annahme: Der Benutzer ist authentifiziert und die ID kann abgerufen werden
-        analysis_results = AnalysisResult.objects.filter(user_id=user_id).select_related('radioInfo__case', 'docker')
-        serializer = AnalysisResultAllSerializer_re(analysis_results, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        # Das letzte Analyseergebnis des Benutzers abrufen
+        analysis_result = AnalysisResult.objects.filter(user_id=user_id).select_related('radioInfo__case', 'docker').order_by('-date_analysis').first()
+        
+        if analysis_result:
+            serializer = AnalysisResultAllSerializer(analysis_result)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'detail': 'No analysis results found.'}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 class CaseRadioInfoAnalysisViewEdit(RetrieveDestroyAPIView):
