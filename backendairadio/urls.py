@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CaseList, CaseDetail, RadioImageList, RadioImageDetail, RadioInfoList, RadioInfoDetail, SendDICOMToDockerView, ListDockerContainersView, RegisterView, MyTokenObtainPairView, CaseRadioInfoAnalysisView, CaseRadioInfoAnalysisViewEdit, MyProfileEdit, UserManagment, UpdateUserStatusView, UserManagmenNotActive, CaseRadioInfoAnalysisView_re
+from .views import CaseList, CaseDetail, RadioImageList, RadioImageDetail, RadioInfoList, RadioInfoDetail, SendDICOMToDockerView, ListDockerContainersView, RegisterView, MyTokenObtainPairView, CaseRadioInfoAnalysisView, CaseRadioInfoAnalysisViewEdit, MyProfileEdit, UserManagment, UpdateUserStatusView, UserManagmenNotActive, CaseRadioInfoAnalysisView_result
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from rest_framework_simplejwt.views import (
@@ -21,7 +21,7 @@ urlpatterns = [
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/', RadioImageDetail.as_view(), name='radioinfo-radioimage-detail'),
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/', ListDockerContainersView.as_view(), name='docker-select'),
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/<int:docker_id>/send_to_docker/', SendDICOMToDockerView.as_view(), name='send_dicom_to_docker'),
-    path('result/', CaseRadioInfoAnalysisView_re.as_view(), name='case_radio_info_analysis1'),
+    path('result/', CaseRadioInfoAnalysisView_result.as_view(), name='case_radio_info_analysis1'),
     path('historie/', CaseRadioInfoAnalysisView.as_view(), name='case_radio_info_analysis'),
     path('historie/<int:pk>/', CaseRadioInfoAnalysisViewEdit.as_view(), name='case_radio_info_analysis_Edit'),
     path('usermanagment/', UserManagment.as_view(), name='Userverwaltung'),
