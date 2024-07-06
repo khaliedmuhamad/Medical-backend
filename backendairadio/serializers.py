@@ -123,7 +123,7 @@ class RadioImageSerializer(serializers.ModelSerializer):
 class DockerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Docker
-        fields = ['description','name','path','docker_ip','docker_port']
+        fields = ['description','name','path','docker_ip','docker_port','id']
 
 class AnalysisResultSerializer(serializers.ModelSerializer):
     radioInfo = serializers.SlugRelatedField(queryset=RadioInfo.objects.all(), slug_field='id')
