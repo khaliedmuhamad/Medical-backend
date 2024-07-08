@@ -128,7 +128,11 @@ class RadioImageSerializer(serializers.ModelSerializer):
 class DockerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Docker
+<<<<<<< HEAD
         fields = ['description', 'name', 'path', 'docker_ip', 'docker_port', 'id']
+=======
+        fields = ['description','name','path','docker_ip','docker_port','id']
+>>>>>>> 2f0604698846f81a204fb5fc2c0f44f4ebfabeaf
 
 # Serializer für Analyseergebnisse
 class AnalysisResultSerializer(serializers.ModelSerializer):

@@ -58,6 +58,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2f0604698846f81a204fb5fc2c0f44f4ebfabeaf
 ]
 
 INTERNAL_IPS = [
@@ -162,7 +166,11 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
+<<<<<<< HEAD
     'AUTH_HEADER_TYPES': ('JWT',),
+=======
+    'AUTH_HEADER_TYPES': ('JWT'),
+>>>>>>> 2f0604698846f81a204fb5fc2c0f44f4ebfabeaf
 }
 
 CORS_ALLOWED_ORIGINS = [

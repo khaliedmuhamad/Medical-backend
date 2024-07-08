@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   analysis1:
-    build: C:\Users\Habos\OneDrive\Desktop\Backend\airadionsose24\Docker_Container_1
+    build: C:\Users\PC\Documents\GitHub\Medical-backend\Docker_Container_1
     ports:
       - "5000:5000"
     container_name: analysis1_container
 
   analysis2:
-    build: C:\Users\Habos\OneDrive\Desktop\Backend\airadionsose24\Docker_Container_2
+    build: C:\Users\PC\Documents\GitHub\Medical-backend\Docker_Container_2
     ports:
       - "5001:5000"  
     container_name: analysis2_container
