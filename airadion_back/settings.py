@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
         
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -58,10 +59,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-<<<<<<< HEAD
-=======
-
->>>>>>> 2f0604698846f81a204fb5fc2c0f44f4ebfabeaf
 ]
 
 INTERNAL_IPS = [
@@ -166,11 +163,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
-<<<<<<< HEAD
     'AUTH_HEADER_TYPES': ('JWT',),
-=======
-    'AUTH_HEADER_TYPES': ('JWT'),
->>>>>>> 2f0604698846f81a204fb5fc2c0f44f4ebfabeaf
 }
 
 CORS_ALLOWED_ORIGINS = [
@@ -194,6 +187,10 @@ CORS_ALLOW_HEADERS = [
 
 
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+'''''
 # Media files (Uploaded by users)
 MEDIA_URL = '/'
 MEDIA_ROOT = BASE_DIR / ""
+'''

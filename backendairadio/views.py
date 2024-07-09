@@ -122,6 +122,19 @@ class ListDockerContainersView(APIView):
         docker_containers = Docker.objects.all()
         serializer = DockerSerializer(docker_containers, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+#Docker entfernen    
+class RetrieveDeleteDockerContainerView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, docker_id):
+        docker_container = get_object_or_404(Docker, id=docker_id)
+        serializer = DockerSerializer(docker_container)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def delete(self, request, docker_id):
+        docker_container = get_object_or_404(Docker, id=docker_id)
+        docker_container.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 # API-View zum Senden eines DICOM-Bildes an einen Docker-Container zur Analyse.
 # Erlaubt nur authentifizierten Benutzern den Zugriff (IsAuthenticated).

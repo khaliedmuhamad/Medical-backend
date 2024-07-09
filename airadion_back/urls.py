@@ -20,11 +20,8 @@ import debug_toolbar
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 2f0604698846f81a204fb5fc2c0f44f4ebfabeaf
 
 urlpatterns = [
     path('__debug__/', include(debug_toolbar.urls)),

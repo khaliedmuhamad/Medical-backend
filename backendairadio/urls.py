@@ -5,7 +5,8 @@ from .views import (
     ListDockerContainersView, RegisterView, MyTokenObtainPairView, 
     CaseRadioInfoAnalysisView, CaseRadioInfoAnalysisViewEdit, 
     MyProfileEdit, UserManagment, UpdateUserStatusView, 
-    UserManagmenNotActive, CaseRadioInfoAnalysisView_result
+    UserManagmenNotActive, CaseRadioInfoAnalysisView_result,
+    RetrieveDeleteDockerContainerView
 )
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
@@ -34,6 +35,7 @@ urlpatterns = [
     path('radioinfos/<int:radioinfo_pk>/radioimages/', RadioImageList.as_view(), name='radioinfo-radioimage-list'),  # Route zum Hinzufügen und Auflisten von Radiologie-Bildern
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/', RadioImageDetail.as_view(), name='radioinfo-radioimage-detail'),  # Route zum Anzeigen, Bearbeiten und Löschen spezifischer Radiologie-Bilder
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/', ListDockerContainersView.as_view(), name='docker-select'),  # Route zur Auswahl eines Docker-Containers für ein Radiologie-Bild
+    path('dockerselect/<int:docker_id>/', RetrieveDeleteDockerContainerView.as_view(), name='docker-delete'),
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/<int:docker_id>/send_to_docker/', SendDICOMToDockerView.as_view(), name='send_dicom_to_docker'),  # Route zum Senden eines Radiologie-Bildes an einen Docker-Container
 
     # Historie und Analyse
