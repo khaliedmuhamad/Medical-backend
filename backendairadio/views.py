@@ -22,7 +22,7 @@ from .serializers import (
     AllActivAndNotUserSerializer, 
     UpdateUserStatusSerializer,
     UpdateUserStatusSerializer_admin,
-    DockerfileUploadSerializer
+    DockerInfoSerializer
     
 )
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView, RetrieveDestroyAPIView, UpdateAPIView, RetrieveUpdateAPIView
@@ -306,16 +306,10 @@ class UpdateUserStaffStatusView(RetrieveUpdateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 
-class DockerfileUploadView(APIView):
-    serializer_class = DockerfileUploadSerializer
-
+class DockerInfoCreateView(APIView):
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data)
+        serializer = DockerInfoSerializer(data=request.data)
         if serializer.is_valid():
-            file = serializer.validated_data['file']
-            file_path = os.path.join(settings.BASE_DIR, 'Dockerfile')  # Speicherort für die Datei
-            with open(file_path, 'wb+') as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
-            return Response({"detail": "Dockerfile erfolgreich hochgeladen."}, status=status.HTTP_201_CREATED)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

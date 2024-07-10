@@ -186,10 +186,7 @@ class UpdateUserStatusSerializer_admin(serializers.ModelSerializer):
         fields = ['is_staff']
 
 
-class DockerfileUploadSerializer(serializers.Serializer):
-    file = serializers.FileField()
-
-    def validate_file(self, value):
-        if not value.name.endswith('.Dockerfile'):
-            raise serializers.ValidationError("Die Datei muss ein Dockerfile sein.")
-        return value
+class DockerInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Docker
+        fields = ['description', 'name', 'path', 'docker_ip', 'docker_port']

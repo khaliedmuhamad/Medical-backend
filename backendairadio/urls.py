@@ -7,7 +7,7 @@ from .views import (
     MyProfileEdit, UserManagment, UpdateUserStatusView, 
     UserManagmenNotActive, CaseRadioInfoAnalysisView_result,
     RetrieveDeleteDockerContainerView, UpdateUserStaffStatusView,
-    DockerfileUploadView
+    DockerInfoCreateView
 )
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
@@ -38,7 +38,7 @@ urlpatterns = [
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/', ListDockerContainersView.as_view(), name='docker-select'),  # Route zur Auswahl eines Docker-Containers für ein Radiologie-Bild
     path('dockerselect/<int:docker_id>/', RetrieveDeleteDockerContainerView.as_view(), name='docker-delete'),
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/<int:docker_id>/send_to_docker/', SendDICOMToDockerView.as_view(), name='send_dicom_to_docker'),  # Route zum Senden eines Radiologie-Bildes an einen Docker-Container
-    path('upload-dockerfile/', DockerfileUploadView.as_view(), name='upload-dockerfile'),
+    path('upload-dockerfile/', DockerInfoCreateView.as_view(), name='upload-dockerfile'),
 
 
     # Historie und Analyse
