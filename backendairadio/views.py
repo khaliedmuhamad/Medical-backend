@@ -20,7 +20,10 @@ from .serializers import (
     AnalysisResultAllSerializer,
     ProfileSerializer, 
     AllActivAndNotUserSerializer, 
-    UpdateUserStatusSerializer 
+    UpdateUserStatusSerializer,
+    UpdateUserStatusSerializer_admin,
+    DockerfileUploadSerializer
+    
 )
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, DestroyAPIView, RetrieveDestroyAPIView, UpdateAPIView, RetrieveUpdateAPIView
 import requests
@@ -30,6 +33,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import MyTokenObtainPairSerializer
 from rest_framework.generics import CreateAPIView
 from rest_framework.decorators import action
+import os
 
 # API-View für die Benutzerregistrierung.
 # Erlaubt anonyme Zugriffe (AllowAny).
@@ -281,4 +285,37 @@ class UpdateUserStatusView(RetrieveUpdateAPIView):
             user.is_active = serializer.validated_data.get('is_active', user.is_active)
             user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UpdateUserStaffStatusView(RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UpdateUserStatusSerializer_admin
+
+    def patch(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        try:
+            user = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        user.is_staff = not user.is_staff
+        user.save()
+
+        serializer = self.get_serializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class DockerfileUploadView(APIView):
+    serializer_class = DockerfileUploadSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            file = serializer.validated_data['file']
+            file_path = os.path.join(settings.BASE_DIR, 'Dockerfile')  # Speicherort für die Datei
+            with open(file_path, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+            return Response({"detail": "Dockerfile erfolgreich hochgeladen."}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -6,7 +6,8 @@ from .views import (
     CaseRadioInfoAnalysisView, CaseRadioInfoAnalysisViewEdit, 
     MyProfileEdit, UserManagment, UpdateUserStatusView, 
     UserManagmenNotActive, CaseRadioInfoAnalysisView_result,
-    RetrieveDeleteDockerContainerView
+    RetrieveDeleteDockerContainerView, UpdateUserStaffStatusView,
+    DockerfileUploadView
 )
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
@@ -37,6 +38,8 @@ urlpatterns = [
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/', ListDockerContainersView.as_view(), name='docker-select'),  # Route zur Auswahl eines Docker-Containers für ein Radiologie-Bild
     path('dockerselect/<int:docker_id>/', RetrieveDeleteDockerContainerView.as_view(), name='docker-delete'),
     path('radioinfos/<int:radioinfo_pk>/radioimages/<int:pk>/dockerselect/<int:docker_id>/send_to_docker/', SendDICOMToDockerView.as_view(), name='send_dicom_to_docker'),  # Route zum Senden eines Radiologie-Bildes an einen Docker-Container
+    path('upload-dockerfile/', DockerfileUploadView.as_view(), name='upload-dockerfile'),
+
 
     # Historie und Analyse
     path('historie/', CaseRadioInfoAnalysisView.as_view(), name='case_radio_info_analysis'),  # Route zum Anzeigen der Fallhistorie und Analysen
@@ -48,4 +51,6 @@ urlpatterns = [
     path('usermanagment/<int:pk>/', UpdateUserStatusView.as_view(), name='User_delet'),  # Route zum Aktualisieren des Benutzerstatus (aktiv/inaktiv) eines spezifischen Benutzers
     path('registerRequestes/', UserManagmenNotActive.as_view(), name='Regisiterungsanfragen'),  # Route zum Anzeigen der Registrierungsanfragen nicht aktiver Benutzer
     path('registerRequestes/<int:pk>/', UpdateUserStatusView.as_view(), name='Regisiterungsanfragen'),  # Route zum Aktualisieren des Benutzerstatus bei Registrierungsanfragen
+    path('usermanagmentToAdmin/<int:pk>/', UpdateUserStaffStatusView.as_view(), name='user_to_admin'),  # Route zum Aktualisieren des Benutzerstatus (admin/nicht-Admin) eines spezifischen Benutzers
+
 ]
